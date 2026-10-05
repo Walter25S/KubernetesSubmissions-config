@@ -10,25 +10,29 @@ kind: Kustomization
 namespace: production
 
 resources:
-  - ../../base
-  - ../../base/backup-local
+- ../../base
+- ../../base/backup-local
 
 patches:
-  - target:
-      kind: Ingress
-      name: todo-app-ingress
-    patch: |-
-      - op: replace
-        path: /spec/rules/0/host
-        value: production.localhost
-  - path: nats-subject.yaml
+- patch: |-
+    - op: replace
+      path: /spec/rules/0/host
+      value: production.localhost
+  target:
+    kind: Ingress
+    name: todo-app-ingress
+- path: nats-subject.yaml
 
 images:
-  - name: wallas25/todo-app
-    newTag: "4.5"
-  - name: wallas25/todo-backend
-    newTag: "4.6"
-  - name: wallas25/todo-cronjob
-    newTag: "2.9"
-  - name: wallas25/broadcaster
-    newTag: "4.9"
+- name: wallas25/broadcaster
+  newName: wallas25/broadcaster
+  newTag: v1.0.0
+- name: wallas25/todo-app
+  newName: wallas25/todo-app
+  newTag: v1.0.0
+- name: wallas25/todo-backend
+  newName: wallas25/todo-backend
+  newTag: v1.0.0
+- name: wallas25/todo-cronjob
+  newName: wallas25/todo-cronjob
+  newTag: v1.0.0
