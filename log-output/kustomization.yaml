@@ -4,15 +4,17 @@ kind: Kustomization
 # What ArgoCD deploys for the "Log output" application (exercise 4.7). ArgoCD reads this folder from
 # Git and makes the cluster look like it.
 resources:
-  - configmap.yaml
-  - deployment.yaml
-  - service.yaml
-  - ingress.yaml
+- configmap.yaml
+- deployment.yaml
+- service.yaml
+- ingress.yaml
 
 # The images that are running. The CI workflow (the workflow log-output.yaml of the code repository) changes these two
 # tags with `kustomize edit set image` and commits the file: that commit is what updates the cluster.
 images:
-  - name: wallas25/log-output-writer
-    newTag: "1.10"
-  - name: wallas25/log-output-reader
-    newTag: "4.1"
+- name: wallas25/log-output-reader
+  newName: wallas25/log-output-reader
+  newTag: 7ea5d3a53db159cd2a59e838bc75d14684d5698b
+- name: wallas25/log-output-writer
+  newName: wallas25/log-output-writer
+  newTag: 7ea5d3a53db159cd2a59e838bc75d14684d5698b
