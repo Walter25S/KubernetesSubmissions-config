@@ -9,25 +9,29 @@ kind: Kustomization
 namespace: staging
 
 resources:
-  - ../../base
+- ../../base
 
 patches:
-  - target:
-      kind: Ingress
-      name: todo-app-ingress
-    patch: |-
-      - op: replace
-        path: /spec/rules/0/host
-        value: staging.localhost
-  - path: nats-subject.yaml
-  - path: broadcaster-log.yaml
+- patch: |-
+    - op: replace
+      path: /spec/rules/0/host
+      value: staging.localhost
+  target:
+    kind: Ingress
+    name: todo-app-ingress
+- path: nats-subject.yaml
+- path: broadcaster-log.yaml
 
 images:
-  - name: wallas25/todo-app
-    newTag: "4.5"
-  - name: wallas25/todo-backend
-    newTag: "4.6"
-  - name: wallas25/todo-cronjob
-    newTag: "2.9"
-  - name: wallas25/broadcaster
-    newTag: "4.9"
+- name: wallas25/broadcaster
+  newName: wallas25/broadcaster
+  newTag: b48ad064f027f32909497c5eceb859159048cad0
+- name: wallas25/todo-app
+  newName: wallas25/todo-app
+  newTag: b48ad064f027f32909497c5eceb859159048cad0
+- name: wallas25/todo-backend
+  newName: wallas25/todo-backend
+  newTag: b48ad064f027f32909497c5eceb859159048cad0
+- name: wallas25/todo-cronjob
+  newName: wallas25/todo-cronjob
+  newTag: b48ad064f027f32909497c5eceb859159048cad0
